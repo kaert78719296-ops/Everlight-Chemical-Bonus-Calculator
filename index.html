@@ -23,7 +23,7 @@
     <h2>獎金試算系統</h2>
     <div class="input-group">
         <label>電化營收 (萬元)：</label>
-        <input type="number" id="num_revenue" value="22028">
+        <input type="number" id="num_revenue" placeholder="請輸入營收金額">
     </div>
     <div class="input-group">
         <label>扣除額 (億)：</label>
@@ -42,34 +42,7 @@
 </div>
 
 <script>
-// 採用最穩定的監聽器寫法，保證按鈕絕對能綁定大腦
 document.getElementById('calcBtn').addEventListener('click', function() {
     // 1. 讀取數值
     const v_rev = parseFloat(document.getElementById('num_revenue').value) || 0;
     const v_ded = parseFloat(document.getElementById('num_deduct').value) || 0;
-    const v_mul = parseFloat(document.getElementById('num_multiplier').value) || 0;
-    
-    // 2. 單位換算
-    const revenue_yuan = v_rev * 10000;
-    const deduct_yuan = v_ded * 100000000;
-    
-    // 3. 計算核心
-    if (revenue_yuan <= deduct_yuan) {
-        document.getElementById('bonusResult').innerText = "$0 (營收未達扣除額)";
-    } else {
-        const exactBonus = ((revenue_yuan - deduct_yuan) / 1000000) * v_mul;
-        const roundedBonus = Math.round(exactBonus);
-        const formattedBonus = roundedBonus.toLocaleString('zh-TW', {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0
-        });
-        document.getElementById('bonusResult').innerText = "$" + formattedBonus;
-    }
-    
-    // 4. 強制顯示結果方塊
-    document.getElementById('resultBox').style.display = 'block';
-});
-</script>
-
-</body>
-</html>
