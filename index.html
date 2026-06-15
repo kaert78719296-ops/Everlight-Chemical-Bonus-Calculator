@@ -46,3 +46,29 @@ document.getElementById('calcBtn').addEventListener('click', function() {
     // 1. 讀取數值
     const v_rev = parseFloat(document.getElementById('num_revenue').value) || 0;
     const v_ded = parseFloat(document.getElementById('num_deduct').value) || 0;
+    const v_mul = parseFloat(document.getElementById('num_multiplier').value) || 0;
+    
+    // 2. 單位換算
+    const revenue_yuan = v_rev * 10000;
+    const deduct_yuan = v_ded * 100000000;
+    
+    // 3. 計算核心
+    if (revenue_yuan <= deduct_yuan) {
+        document.getElementById('bonusResult').innerText = "$0 (營收未達扣除額)";
+    } else {
+        const exactBonus = ((revenue_yuan - deduct_yuan) / 1000000) * v_mul;
+        const roundedBonus = Math.round(exactBonus);
+        const formattedBonus = roundedBonus.toLocaleString('zh-TW', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        });
+        document.getElementById('bonusResult').innerText = "$" + formattedBonus;
+    }
+    
+    // 4. 顯示結果方塊
+    document.getElementById('resultBox').style.display = 'block';
+});
+</script>
+
+</body>
+</html>
